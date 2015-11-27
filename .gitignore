@@ -1,5 +1,5 @@
 *.class
-./src/TestMain.java
+/src/TestMain.java
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

@@ -8,6 +8,7 @@ public class SRefrigerator {
 	private ArrayList<SFood> emptyFoodList;
 	private ArrayList<SUser> userList;
 	
+	
 	public void CreateFood()
 	{
 		

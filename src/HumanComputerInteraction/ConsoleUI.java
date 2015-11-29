@@ -8,6 +8,8 @@ public class ConsoleUI {
 	
 	private Scanner scan;
 	private CUser 	nowUser;
+	//login class
+	private CLogin login;
 	
 	// constructor /////////////////////////////////////////////
 	public ConsoleUI() {
@@ -104,6 +106,8 @@ public class ConsoleUI {
 			pw = scan.next();
 			
 			// 아이디 패스워드 체크를 통해 로그인을 허용한다.
+			login = new CLogin(id, pw);
+			flag = login.LoginCheck();
 			
 			if (flag == -1) {
 				System.out.printf(" This [%s] ID does not exit\n\n", id);
@@ -126,16 +130,16 @@ public class ConsoleUI {
 	
 	private void signUpScreen()
 	{
-		String id, pw;
+		String id, pw, name;
 		int flag = 0;
 		// 0 : default
 		// 1 : 가입 할 수 있음
 		// -1 : 아이디 중복
 		
-		System.out.println("*********************************************");
-		System.out.println("* Sign Up                                   *");
-		System.out.println("*   Enter ID and Password you want to make  *");
-		System.out.println("*********************************************");
+		System.out.println("**************************************************");// * : 5개 추가
+		System.out.println("* Sign Up                                        *");
+		System.out.println("*  Enter ID, Password and Name you want to make  *");
+		System.out.println("**************************************************");// * : 5개 추가
 		
 		
 		while (true)
@@ -146,10 +150,16 @@ public class ConsoleUI {
 			System.out.printf(" PW : ");
 			pw = scan.next();
 			
+			System.out.printf(" Name : ");
+			name = scan.next();
+			
 			// CLogIn클래스를 통해 통신을해서 아이디와 비밀번호를 이렇게 입력해도 되는지 체크한다.
+			login = new CLogin(id, pw, name);
+			flag = login.SignUpCheck();
+			
 			if (flag == 1)
 			{
-				
+				login.SignUp();//sign up, 별도의 성공멘트를 추가해야한다.
 			}
 			else if (flag == -1)
 			{

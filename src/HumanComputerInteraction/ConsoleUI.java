@@ -2,13 +2,17 @@ package HumanComputerInteraction;
 
 import java.util.Scanner;
 
+import Client.*;
+
 public class ConsoleUI {
 	
 	private Scanner scan;
+	private CUser 	nowUser;
 	
 	// constructor /////////////////////////////////////////////
 	public ConsoleUI() {
 		this.scan = new Scanner( System.in );
+		setUser( null );
 	}
 	////////////////////////////////////////////////////////////
 	
@@ -35,6 +39,7 @@ public class ConsoleUI {
 	
 	private void startScreen()
 	{
+		System.out.println("");
 		/////////////////////////////////////////////
 		// 메뉴 선택 (flag 변수를 이용)
 		// 0 : 초기 값
@@ -64,25 +69,122 @@ public class ConsoleUI {
 				break;
 			else
 				System.out.println("!! Exceptional an input : Re-enter, please. !!");
-			System.out.println();
 		}
 		
 		
 		switch (flag) {
 		case 1 : // log in 선택
-			
+			logInScreen();
 			break;
 		case 2 : // sign up 선택
-			
+			signUpScreen();
 			break;
 		}
 	}
 	
+	private void logInScreen()
+	{
+		String id, pw;
+		int flag = 0;
+		// 0 : default
+		// -1 : id error
+		// -2 : pw error
+		// 1 : 로그인 성공
+		
+		System.out.println("*********************************");
+		System.out.println("* Log In                        *");
+		System.out.println("*   Enter your ID and Password  *");
+		System.out.println("*********************************");
+		
+		while (true)
+		{
+			System.out.printf(" ID : ");
+			id = scan.next();
+			System.out.printf(" PW : ");
+			pw = scan.next();
+			
+			// 아이디 패스워드 체크를 통해 로그인을 허용한다.
+			
+			if (flag == -1) {
+				System.out.printf(" This [%s] ID does not exit\n\n", id);
+			}
+			else if (flag == -2) {
+				System.out.printf(" This [%s] PW does not exit\n\n", pw);
+			}
+			else if (flag == 1) {
+				// 다음 화면 나오게 출력
+				refriListScreen();
+				break;
+			}
+			else if (flag == 0) { // develop mode
+				System.out.println(" Develope master login ");
+				refriListScreen();
+				break;
+			}
+		}
+	}
+	
+	private void signUpScreen()
+	{
+		String id, pw;
+		int flag = 0;
+		// 0 : default
+		// 1 : 가입 할 수 있음
+		// -1 : 아이디 중복
+		
+		System.out.println("*********************************************");
+		System.out.println("* Sign Up                                   *");
+		System.out.println("*   Enter ID and Password you want to make  *");
+		System.out.println("*********************************************");
+		
+		
+		while (true)
+		{
+			System.out.printf(" ID : ");
+			id = scan.next();
+			
+			System.out.printf(" PW : ");
+			pw = scan.next();
+			
+			// CLogIn클래스를 통해 통신을해서 아이디와 비밀번호를 이렇게 입력해도 되는지 체크한다.
+			if (flag == 1)
+			{
+				
+			}
+			else if (flag == -1)
+			{
+				System.out.printf(" !! This [%s] ID already exits.\n", id);
+				System.out.println(" !! Please reenter ID and Password.");
+			}
+			else {
+				System.out.printf("Sign up Error : %s, %s, dont know this input type case.\n", id, pw);
+				break;
+			}
+		}
+		
+		startScreen();
+	}
+	
+	private void refriListScreen()
+	{
+		
+	}
 	
 	
 	private void nextScreen()
 	{
 		for (int i = 0 ; i < 20; i++)
 			System.out.println("");
+	}
+	
+	
+	// getter setter /////////////////////////////////////////////
+	public CUser getUser()
+	{
+		return this.nowUser;
+	}
+	public void setUser(CUser user) 
+	{
+		this.nowUser = user;
 	}
 }

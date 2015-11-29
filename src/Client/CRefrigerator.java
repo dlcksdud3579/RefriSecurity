@@ -27,6 +27,8 @@ public class CRefrigerator {
 	{
 		
 	}
+	
+
 
 	public String getOwnerID() {
 		return ownerID;

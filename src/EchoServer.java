@@ -162,13 +162,11 @@ public class EchoServer extends AbstractServer
   public void process(ConnectionToClient client)
   {
 	  String command =divideString();
-	  int index =0;
 	  SUser tempUser = null;
 	  SFood tempFood = null;
-	  SRefrigerator tempRefri = null;
-	  int refriNum = 0;
-	  int foodNum = 0;
+	  SRefrigerator tempRefri = null; 
 	  String tempMsg = ""; // client에게 보낼 메세지
+	 
 	switch(command)
 	{
 	case "addUser": // /유저추가/ addUser/User.Tostirng (유저 아이디/비밀번호/이름/)
@@ -178,8 +176,8 @@ public class EchoServer extends AbstractServer
 		tempUser.setName(divideString());
 		m_data.getUserList().add(tempUser); // 유저 추가 
 		break;
-	case "addFood": // 푸드추가//   addFood/내장고넘버/food.toString(이름/넘버/퍼센트/유통기한/ 보관시작/코멘트/)
-		refriNum = Integer.parseInt(divideString()); // 음식이 들어갈 냄장고넘버 
+	case "addFood": // 푸드추가//   addFood/내장고시리얼/food.toString(이름/넘버/퍼센트/유통기한/ 보관시작/코멘트/)
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString())); // 음식이 들어갈 냄장고시리얼 넘버 
 		tempFood = new SFood();
 		tempFood.setName(divideString());						// 이름
 		tempFood.setNumber(Integer.parseInt(divideString()));  	// 넘버  
@@ -190,72 +188,78 @@ public class EchoServer extends AbstractServer
 		tempFood.setStartDate(new Date(Integer.parseInt(divideString()),
 				Integer.parseInt(divideString()),
 				Integer.parseInt(divideString())));		// 보관시간
-		tempFood.setComment(divideString());						// 코멘트
-		m_data.getRefriList().get(refriNum).getFoodList().add(tempFood); // 푸드 추가 
+		tempFood.setComment(divideString());	// 코멘트
+		
+		tempRefri.getFoodList().add(tempFood); // 푸드 추가 
 		break;
 	case "addRefri":
 	case "addRefrigerator":  // 냉장고 추추추추가  //  addRefri/이름/번호/냉장고 오너아이디/
 		tempRefri = new SRefrigerator();
 		tempRefri.setOwnerID(divideString());
-		for(int i =0;i<m_data.getUserList().size();i++)
-			if(m_data.getUserList().get(i).getID() == tempRefri.getOwnerID())
-				tempRefri.getUserList().add((m_data.getUserList().get(i)));
+		tempUser = m_data.searchSUser(tempRefri.getOwnerID());
+		if(tempUser.getID() == tempRefri.getOwnerID())
+			tempRefri.getUserList().add(tempUser);
 		
 		m_data.getRefriList().add(tempRefri); // 레프리 추가 
 		break;
 	case "getUser": // 원하는 유저 정보 받오는    getUser/유저아이디
-		index = Integer.parseInt(divideString());
-		tempMsg = m_data.getUserList().get(index).toString();
+		m_data.searchSUser(divideString()); // 유저 아이디로 서치 
+		tempMsg =m_data.toString();
+		
 		sendtoOneClient(tempMsg,client); // 클라이언트로 전송 
 		break;
-	case "getRefrigerator": // 원하는 냉자고 정보 받아오는   / 냉장고넘버
-		index = Integer.parseInt(divideString());
-		tempMsg = m_data.getRefriList().get(index).toString();
+	case "getRefrigerator": // 원하는 냉자고 정보 받아오는   / getRefrigerator/ 냉장고시리얼/
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		tempMsg = tempRefri.toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
-	case "getFood": // 음식 정보 받아오는 
-		refriNum = Integer.parseInt(divideString());
-		foodNum = Integer.parseInt(divideString());
-		tempMsg = m_data.getRefriList().get(refriNum).getFoodList().get(foodNum).toString();
+	case "getFood": // 음식 정보 받아오는   /getFood/냉장고시리얼/음식이름/
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		tempFood = tempRefri.searchFood(divideString());
+		tempMsg = tempFood.toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
-	case "getUserList": // 유저리스트를 
+	case "getUserList": // 유저리스트를    / getUserList/
 		for(int i=0;i<m_data.getUserList().size();i++)
 			tempMsg = m_data.getUserList().get(i).toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
-	case "getRefrigeratorList": // 냉장고 리스트를 
+	case "getRefrigeratorList": // 냉장고 리스트를  /getRefrigeratorList/
 		for(int i=0;i<m_data.getRefriList().size();i++)
 			tempMsg = m_data.getRefriList().get(i).toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
-	case "getFoodList": // 원하는 냉장고의 음식 리스트를 
-		refriNum = Integer.parseInt(divideString());
-		for(int i=0;i<m_data.getRefriList().get(refriNum).getFoodList().size();i++)
-			tempMsg = m_data.getRefriList().get(refriNum).getFoodList().get(i).toString();
+	case "getFoodList": // 원하는 냉장고의 음식 리스트를  
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		for(int i=0;i<tempRefri.getFoodList().size();i++)
+			tempMsg = tempRefri.getFoodList().get(i).toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
-	case "removeUser": // 죽어라 유저 
-		index = Integer.parseInt(divideString());
-		m_data.getUserList().remove(index);
-		
-	case "removeRefri": // 사라져라 냉자고
-		refriNum= Integer.parseInt(divideString());
-		m_data.getRefriList().remove(refriNum);
-		
-	case "removeFood": // 음식 소멸 
-		refriNum= Integer.parseInt(divideString());
-		foodNum= Integer.parseInt(divideString());
-		m_data.getRefriList().get(refriNum).getFoodList().remove(foodNum);
-		
-	case "getEmptyFoodList": // 빈음식리스트트트트 보냄 클라로 
-		refriNum = Integer.parseInt(divideString());
-		for(int i=0;i<m_data.getRefriList().get(refriNum).getEmptyFoodList().size();i++)
-			tempMsg = m_data.getRefriList().get(refriNum).getEmptyFoodList().get(i).toString();
+	case "removeUser": // 죽어라 유저  / removeUser/유저네임/
+		tempUser =m_data.searchSUser(divideString());
+		m_data.getUserList().remove(tempUser);
+		for(int i=0;i<tempUser.getMyRefrigerator().size();i++)
+			tempUser.getMyRefrigerator().get(i).getUserList().remove(tempUser);
+		break;
+	case "removeRefri": // 사라져라 냉자고  /removeRefri/냉장고시리얼/
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		m_data.getRefriList().remove(tempRefri);
+		for(int i=0;i<tempUser.getMyRefrigerator().size();i++)
+			tempRefri.getUserList().get(i).getMyRefrigerator().remove(tempRefri);
+		break;
+	case "removeFood": // 음식 소멸  /removeFood/냉장고시리얼/음식이름/
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		tempFood = tempRefri.searchFood(divideString());
+		tempRefri.getFoodList().remove(tempFood);
+		break;
+	case "getEmptyFoodList": // 빈음식리스트트트트 보냄 클라로   /getEmptyFoodList/냉작고시리얼/
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		for(int i=0;i<tempRefri.getEmptyFoodList().size();i++)
+			tempMsg += tempRefri.getEmptyFoodList().get(i).toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
-	case "addEmptyFood": //빈 푸트 추가 
-		refriNum = Integer.parseInt(divideString()); // 음식이 들어갈 냄장고넘버 
+	case "addEmptyFood": //빈 푸트 추가  / addEmptyFood/냉장고리스트/ food.tostring(이름/넘버/퍼센트/유통기한/ 보관시작/코멘트/)
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));// 음식이 들어갈 냄장고넘버 
 		tempFood = new SFood();
 		tempFood.setNumber(Integer.parseInt(divideString()));  	// 넘버  
 		tempFood.setName(divideString());						// 이름 
@@ -267,33 +271,55 @@ public class EchoServer extends AbstractServer
 				Integer.parseInt(divideString()),
 				Integer.parseInt(divideString())));	;		// 보관시간
 		tempFood.setComment(divideString());						// 코멘트
-		m_data.getRefriList().get(refriNum).getEmptyFoodList().add(tempFood); // 푸드 추가 
+		tempRefri.getEmptyFoodList().add(tempFood); // 푸드 추가 
 		break;
-	case "removeEmptyFood": // 빈음식 삭제  
-		refriNum= Integer.parseInt(divideString());
-		foodNum= Integer.parseInt(divideString());
-		m_data.getRefriList().get(refriNum).getEmptyFoodList().remove(foodNum);
+	case "removeEmptyFood": // 빈음식 삭제  /removeEmptyFood/냉장고시리얼/음식이름/
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		tempFood= tempRefri.searchEmptyFood(divideString());
+		tempRefri.getEmptyFoodList().remove(tempFood);
 		break;
-	case "getEmptyfood": //빈 푸드 삭제  /냉장고넘버/ 
-		refriNum = Integer.parseInt(divideString());
-		foodNum = Integer.parseInt(divideString());
-		tempMsg = m_data.getRefriList().get(refriNum).getEmptyFoodList().get(foodNum).toString();
+	case "getEmptyfood": //빈 푸드 삭제  /getEmptyfood/냉장고넘버/푸드이름/
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		tempFood = tempRefri.searchEmptyFood(divideString());
+		tempMsg = tempFood.toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
 		 
-	case "InviteRefri": // 아몰랑 초대  / 오너아이디 / 초대할사람아이디
-		refriNum = Integer.parseInt(divideString());
-		String OwnerId = divideString(); // 오너 넘버
-		String visitorId = divideString(); // 초대 넘버 
-		if(m_data.getRefriList().get(refriNum).getOwnerID() != OwnerId)
+	case "InviteRefri": // 아몰랑 초대 /InviteRefri/냉장고 시리얼/오너아이디 / 초대할사람아이디
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+		if(tempRefri.getOwnerID() != divideString()) //오너 넘버 체크 
 			break;
-			
-			
-		m_data.getUserList().get(index).getMyRefrigerator().add(m_data.getRefriList().get(refriNum));
-		m_data.getRefriList().get(refriNum).getUserList().add(m_data.getUserList().get(index));
+		tempUser = tempRefri.searchSUser(divideString()); // 초대 넘버 
+		tempUser.getMyRefrigerator().add(tempRefri);
+		tempRefri.getUserList().add(tempUser);
+		break;
+	case "KickRefri": // 아몰랑 초대 /InviteRefri/냉장고 시리얼/오너아이디/초대할사람아이디
+		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
+	
+		if(tempRefri.getOwnerID() != divideString()) //오너 넘버 체크 
+			break;
+		tempUser = tempRefri.searchSUser(divideString()); // 초대 넘버 
+		tempUser.getMyRefrigerator().remove(tempRefri);
+		tempRefri.getUserList().remove(tempUser);
+		break;
 		
-	case "removeMyRefri": //자신의 냉장고를 삭제를 하는 함수를 부르는 함수를 부르른 부르르는 느느는  거 
-		
+	case "removeMyRefri": //자신의 냉장고를 삭제를 하는 함수를 부르는 함수를 부르른 부르르는 느느는  거  removeMyRefri /유저네임/냉장고시리얼
+		tempUser = m_data.searchSUser(divideString());
+		tempRefri = tempUser.searchRefrigerator(Integer.parseInt(divideString()));
+		tempUser.getMyRefrigerator().remove(tempRefri);
+		break;
+	case "getUserRefriList": //유저의 냉장고리스트를 /getUserRefri/유저이름 /
+		tempUser = m_data.searchSUser(divideString());
+		for(int i=0;i<tempUser.getMyRefrigerator().size();i++)
+			tempMsg += tempUser.getMyRefrigerator().get(i).toString();
+		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
+		break;
+	case "getUserRefri": //유저의 냉장고리스트를 /getUserRefri/유저이름 /냉장고 시리얼
+		tempUser = m_data.searchSUser(divideString());
+		tempRefri = tempUser.searchRefrigerator(Integer.parseInt(divideString()));
+		tempMsg = tempRefri.toString();
+		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
+		break;
 	default:
 	} 
 	m_data.writeToFile();

@@ -49,10 +49,26 @@ public class SUser implements Serializable
 	public void setMyRefrigerator(ArrayList<SRefrigerator> myRefrigerator) {
 		this.myRefrigerator = myRefrigerator;
 	}
+	
+	public SRefrigerator searchRefrigerator(int serial)
+	{
+		SRefrigerator tempRefri = null;
+		for(int i =0;i<this.getMyRefrigerator().size();i++)
+			if(this.getMyRefrigerator().get(i).getSerial() == serial)
+				tempRefri=this.getMyRefrigerator().get(i);
+		return tempRefri;
+	}
+	 
+	
 	@Override
 	public String toString()
 	{
-		return ID+"/"+name+"/" + PW+"/";
+		String refri = "";
+		
+		for(int i =0;i<this.getMyRefrigerator().size();i++)
+			refri +=getMyRefrigerator().get(i).getSerial()+"/";
+		
+		return ID+"/"+name+"/"+PW+"/myRefrigerator/"+refri;
 	}
 	
 }

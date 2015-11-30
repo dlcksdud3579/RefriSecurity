@@ -111,7 +111,23 @@ public class SDataList implements Serializable{
 		}
 	}
 
-	
-	
+	public SRefrigerator searchRefrigerator(int serial)
+	{
+		SRefrigerator tempRefri = null;
+		for(int i =0;i<this.getRefriList().size();i++)
+			if(this.getRefriList().get(i).getSerial() == serial)
+				tempRefri=this.getRefriList().get(i);
+		return tempRefri;
+	}
+	 
+	public SUser searchSUser(String id)
+	{
+		SUser tempUser = null;
+		for(int i =0;i<this.getUserList().size();i++)
+			if(this.getUserList().get(i).getID() == id)
+				tempUser=this.getUserList().get(i);
+		return tempUser;
+	}
+	 
 	
 }

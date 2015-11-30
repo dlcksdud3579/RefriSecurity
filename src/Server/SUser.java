@@ -1,9 +1,16 @@
 package Server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SUser {
+public class SUser implements Serializable
+{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String ID;
 	private String PW;
 	private String name;
@@ -42,4 +49,10 @@ public class SUser {
 	public void setMyRefrigerator(ArrayList<SRefrigerator> myRefrigerator) {
 		this.myRefrigerator = myRefrigerator;
 	}
+	@Override
+	public String toString()
+	{
+		return ID+"/"+name+"/" + PW+"/";
+	}
+	
 }

@@ -1,10 +1,16 @@
 package Server;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class SFood {
+public class SFood implements Serializable{
 
-	private String ownerID;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String name;
 	private int number;
 	private float percent;
 	private Date exprieDate; 
@@ -16,13 +22,16 @@ public class SFood {
 		
 	}
 
-	public String getOwnerID() {
-		return ownerID;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setOwnerID(String ownerID) {
-		this.ownerID = ownerID;
+
+	public void setName(String name) {
+		this.name = name;
 	}
+
 
 	public int getNumber() {
 		return number;
@@ -63,5 +72,9 @@ public class SFood {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+	@Override
+	public String toString()
+	{
+		return 	name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
+	}
 }

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class CFood {
 
-	private String ownerID;
+	private String name;
 	private int number;
 	private float percent;
 	private Date exprieDate; 
@@ -16,13 +16,19 @@ public class CFood {
 		
 	}
 
-	public String getOwnerID() {
-		return ownerID;
+
+
+	public String getName() {
+		return name;
 	}
 
-	public void setOwnerID(String ownerID) {
-		this.ownerID = ownerID;
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
 
 	public int getNumber() {
 		return number;

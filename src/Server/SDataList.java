@@ -36,9 +36,8 @@ public class SDataList implements Serializable{
 		userList = new ArrayList<SUser>();
 		refriList = new ArrayList<SRefrigerator>();
 		// 테스트 
-		
 	}
-
+	
 	// 파일 입출력 
 	public void readFromFile()
 	{
@@ -132,6 +131,42 @@ public class SDataList implements Serializable{
 		}
 		return tempUser;
 	}
-	 
+
+	public void addUser(SUser user)
+	{
+		this.getUserList().add(user);
+	}
+	public void addRefri(SRefrigerator refri)
+	{
+		
+		SUser tempUser = searchSUser(refri.getOwnerID());
+		if(tempUser ==null)
+			return;
+		
+		refri.addUser(tempUser);
+		tempUser.addMyRefri(refri);
+		
+		getRefriList().add(refri);
+	}
 	
+	public void removeUser(SUser user)
+	{
+		if(user ==null)
+			return;
+		for(int i=0;i<user.getMyRefrigerator().size();i++)
+			user.getMyRefrigerator().get(i).getUserList().remove(user);
+		this.getUserList().remove(user);
+	}
+	public void removeRefri(SRefrigerator refri)
+	{
+		if(refri == null)
+			return;
+		for(int i=0;i<refri.getUserList().size();i++)
+		{
+			if(refri.getUserList().get(i).searchRefrigerator(refri.getSerial()) != null)
+				refri.getUserList().get(i).getMyRefrigerator().remove(refri);
+		}
+		getRefriList().remove(refri);
+	
+	}
 }

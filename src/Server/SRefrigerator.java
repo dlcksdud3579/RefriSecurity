@@ -42,26 +42,8 @@ public class SRefrigerator implements Serializable{
 		userList = new ArrayList<SUser>();
 		
 	}
+	
 
-	public void CreateFood()
-	{
-		
-	}
-	
-	public void DeleteeFood()
-	{
-		
-	}
-	
-	public void MoveToEmptyFoodList()
-	{
-		
-	}
-	
-	public void InviteOtherUser()
-	{
-		
-	}
 
 	public String getOwnerID() {
 		return ownerID;
@@ -138,5 +120,68 @@ public class SRefrigerator implements Serializable{
 		
 		return name+"/"+ serial+"/"+ ownerID+"/"+"foodList/"+foodList+"emptyFoodList/" +emptyFoodList+"userList/" + userList;
 	}
+
+
+	
+	public void DeleteeFood()
+	{
+		
+	}
+	
+	public void MoveToEmptyFoodList()
+	{
+		
+	}
+	
+	public void InviteOtherUser(String id,SUser user)
+	{
+		if(getOwnerID().equals(id) == false) //오너 넘버 체크 
+			return;
+		 // 초대 멤버버 
+		if(user == null)
+			return;
+		user.addMyRefri(this);
+		addUser(user);
+	}
+	public void KickOtherUser(String id,SUser user)
+	{
+		if(getOwnerID().equals(id) == false) //오너 넘버 체크 
+			return;
+		 // 강퇴 멤버
+		if(user == null)
+			return;
+		user.removeMyRefri(this);
+		removeUser(user);
+	}
+	
+	public void addUser(SUser user)
+	{
+		this.getUserList().add(user);
+	}
+	public void addFood(SFood food)
+	{
+		this.getFoodList().add(food);
+	}
+	public void addEmptyFood(SFood food)
+	{
+		this.getEmptyFoodList().add(food);
+	}
+	public void removeUser(SUser user)
+	{
+		this.getUserList().remove(user);
+	}
+	public void removeFood(SFood food)
+	{
+		if(food == null)
+			return;
+		this.getFoodList().remove(food);
+	}
+	public void removeEmptyFood(SFood food)
+	{
+		if(food == null)
+			return;
+		this.getEmptyFoodList().remove(food);
+	}
+	
 	
 }

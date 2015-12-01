@@ -80,6 +80,15 @@ public class TestMain implements ChatIF
      addRefri/이름/번호/냉장고 오너아이디/
      addEmptyFood/냉장고시리얼/ food.tostring(이름/넘버/퍼센트/유통기한(년/월/일)/보관시작(년/월/일)/코멘트/)
     
+     removeUser/유저네임/
+     removeRefri/냉장고시리얼/
+     removeFood/냉장고시리얼/음식이름/
+     removeEmptyFood/냉장고시리얼/음식이름/
+     removeMyRefri/유저아이디/냉장고시리얼/
+     
+     InviteRefri/냉장고 시리얼/오너아이디 / 초대할사람아이디
+     KickRefri/냉장고 시리얼/오너아이디/초대할사람아이디
+     
      getUser/유저아이디/
      getRefrigerator/ 냉장고시리얼/
      getFood/냉장고시리얼/음식이름/
@@ -91,17 +100,6 @@ public class TestMain implements ChatIF
      getUserRefriList/유저이름/
      getUserRefri/유저이름/냉장고 시리얼/
      
-     removeUser/유저네임/
-     removeRefri/냉장고시리얼/오너아이디/
-     removeFood/냉장고시리얼/음식이름/
-     removeEmptyFood/냉장고시리얼/음식이름/
-     removeMyRefri/유저아이디/냉장고시리얼/
-     
-     InviteRefri/냉장고 시리얼/오너아이디 / 초대할사람아이디
-     KickRefri/냉장고 시리얼/오너아이디/초대할사람아이디
-     
-     
-    
      */
      
       while (true) 

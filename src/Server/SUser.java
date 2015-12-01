@@ -93,4 +93,27 @@ public class SUser implements Serializable
 		return ID+"/"+name+"/"+PW+"/myRefrigerator/"+refri;
 	}
 	
+	public void addMyRefri(SRefrigerator refri)
+	{
+		getMyRefrigerator().add(refri);
+	}
+	public void removeMyRefri(SRefrigerator refri)
+	{
+		if(refri == null)
+			return;
+		if(refri.getOwnerID().equals(getID()))
+		{
+			for(int i=0;i<refri.getUserList().size();i++)
+			{
+				if(refri.getUserList().get(i).searchRefrigerator(refri.getSerial()) != null)
+					refri.getUserList().get(i).getMyRefrigerator().remove(refri);
+			}
+		}
+		else
+		{
+			getMyRefrigerator().remove(refri);
+		}
+		
+	}
+	
 }

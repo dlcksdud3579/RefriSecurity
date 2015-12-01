@@ -44,6 +44,7 @@ public class EchoServer extends AbstractServer
     super(port);
     // 찬영 추가 
     m_data = new SDataList();
+   
     m_data.readFromFile();
   }
 
@@ -64,6 +65,7 @@ public class EchoServer extends AbstractServer
 	process(client);
     System.out.println("Message received: " + tempMsg + " from " + client);
     //this.sendToAllClients(msg);
+    m_data.writeToFile();
     
   }
   
@@ -166,7 +168,6 @@ public class EchoServer extends AbstractServer
 	  SFood tempFood = null;
 	  SRefrigerator tempRefri = null; 
 	  String tempMsg = ""; // client에게 보낼 메세지
-	 
 	switch(command)
 	{
 	case "addUser": // /유저추가/ addUser/User.Tostirng (유저 아이디/비밀번호/이름/)
@@ -202,7 +203,7 @@ public class EchoServer extends AbstractServer
 		
 		m_data.getRefriList().add(tempRefri); // 레프리 추가 
 		break;
-	case "getUser": // 원하는 유저 정보 받오는    getUser/유저아이디
+	case "getUser": // 원하는 유저 정보 받오는    getUser/유저아이디/
 		m_data.searchSUser(divideString()); // 유저 아이디로 서치 
 		tempMsg =m_data.toString();
 		
@@ -229,7 +230,7 @@ public class EchoServer extends AbstractServer
 			tempMsg = m_data.getRefriList().get(i).toString();
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
-	case "getFoodList": // 원하는 냉장고의 음식 리스트를  
+	case "getFoodList": // 원하는 냉장고의 음식 리스트를   getFoodList/냉장고 시리얼/
 		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
 		for(int i=0;i<tempRefri.getFoodList().size();i++)
 			tempMsg = tempRefri.getFoodList().get(i).toString();
@@ -303,7 +304,7 @@ public class EchoServer extends AbstractServer
 		tempRefri.getUserList().remove(tempUser);
 		break;
 		
-	case "removeMyRefri": //자신의 냉장고를 삭제를 하는 함수를 부르는 함수를 부르른 부르르는 느느는  거  removeMyRefri /유저네임/냉장고시리얼
+	case "removeMyRefri": //자신의 냉장고를 삭제를 하는 함수를 부르는 함수를 부르른 부르르는 느느는  거  removeMyRefri /유저네임/냉장고시리얼/
 		tempUser = m_data.searchSUser(divideString());
 		tempRefri = tempUser.searchRefrigerator(Integer.parseInt(divideString()));
 		tempUser.getMyRefrigerator().remove(tempRefri);
@@ -321,8 +322,9 @@ public class EchoServer extends AbstractServer
 		sendtoOneClient(tempMsg,client);// 클라이언트로 전송 
 		break;
 	default:
+		tempMsg = "잘못된 명령어입니다.";
+		sendtoOneClient(tempMsg,client);
 	} 
-	m_data.writeToFile();
   }
 }
 //End of EchoServer class

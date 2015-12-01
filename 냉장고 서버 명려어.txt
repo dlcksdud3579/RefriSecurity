@@ -1,0 +1,21 @@
+addUser/User.Tostirng (유저 아이디/비밀번호/이름/)
+addFood/내장고시리얼/food.toString(이름/넘버/퍼센트/유통기한/ 보관시작/코멘트/)
+addRefri/이름/번호/냉장고 오너아이디/
+getUser/유저아이디/
+getRefrigerator/ 냉장고시리얼/
+getFood/냉장고시리얼/음식이름/
+getUserList/
+getRefrigeratorList/
+getFoodList/냉장고 시리얼/
+removeUser/유저네임/
+removeRefri/냉장고시리얼/
+removeFood/냉장고시리얼/음식이름/
+getEmptyFoodList/냉작고시리얼/
+addEmptyFood/냉장고리스트/ food.tostring(이름/넘버/퍼센트/유통기한/ 보관시작/코멘트/)
+removeEmptyFood/냉장고시리얼/음식이름/
+getEmptyfood/냉장고넘버/푸드이름/
+InviteRefri/냉장고 시리얼/오너아이디 / 초대할사람아이디
+InviteRefri/냉장고 시리얼/오너아이디/초대할사람아이디
+removeMyRefri /유저네임/냉장고시리얼/
+getUserRefri/유저이름/
+getUserRefri/유저이름/냉장고 시리얼

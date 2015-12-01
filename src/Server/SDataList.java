@@ -35,6 +35,8 @@ public class SDataList implements Serializable{
 		super();
 		userList = new ArrayList<SUser>();
 		refriList = new ArrayList<SRefrigerator>();
+		// 테스트 
+		
 	}
 
 	// 파일 입출력 
@@ -42,7 +44,7 @@ public class SDataList implements Serializable{
 	{
 		try
 		{
-			FileInputStream fin = new FileInputStream("datafile.dat");
+			FileInputStream fin = new FileInputStream("data.txt");
 			ObjectInputStream oin = new ObjectInputStream(fin);
 			
 			SDataList temp = (SDataList)oin.readObject();
@@ -70,7 +72,7 @@ public class SDataList implements Serializable{
 		catch(Exception exception)
 		{
 			System.err.println("cannot open and read the file!");
-			writeToFile();
+			//writeToFile();
 		}
 		finally
 		{
@@ -82,7 +84,7 @@ public class SDataList implements Serializable{
 	{
 		try
 		{
-			FileOutputStream fout = new FileOutputStream("datafile.dat");
+			FileOutputStream fout = new FileOutputStream("data.txt");
 			ObjectOutputStream oout = new ObjectOutputStream(fout);
 			
 			oout.writeObject(this);

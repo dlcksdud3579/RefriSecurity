@@ -16,6 +16,26 @@ public class SUser implements Serializable
 	private String name;
 	private ArrayList<SRefrigerator> myRefrigerator;
 	
+	
+	
+	public SUser(String iD, String pW, String name) {
+		super();
+		ID = iD;
+		PW = pW;
+		this.name = name;
+		myRefrigerator = new ArrayList<SRefrigerator>();
+	}
+	
+	
+	public SUser() {
+		super();
+		ID = "";
+		PW = "";
+		this.name = "";
+		myRefrigerator = new ArrayList<SRefrigerator>();
+	}
+
+
 	public void CreateRefrigerator()
 	{
 		

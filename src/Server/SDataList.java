@@ -66,8 +66,6 @@ public class SDataList implements Serializable{
 			{
 				System.out.println("RefriList"+"["+i+"]: "  + getRefriList().get(i).toString());
 			}
-			
-			
 		}
 		catch(Exception exception)
 		{
@@ -117,8 +115,10 @@ public class SDataList implements Serializable{
 	{
 		SRefrigerator tempRefri = null;
 		for(int i =0;i<this.getRefriList().size();i++)
+		{
 			if(this.getRefriList().get(i).getSerial() == serial)
 				tempRefri=this.getRefriList().get(i);
+		}
 		return tempRefri;
 	}
 	 
@@ -126,8 +126,10 @@ public class SDataList implements Serializable{
 	{
 		SUser tempUser = null;
 		for(int i =0;i<this.getUserList().size();i++)
-			if(this.getUserList().get(i).getID() == id)
+		{
+			if(this.getUserList().get(i).getID().equals(id))
 				tempUser=this.getUserList().get(i);
+		}
 		return tempUser;
 	}
 	 

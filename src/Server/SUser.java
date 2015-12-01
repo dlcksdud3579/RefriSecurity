@@ -86,8 +86,10 @@ public class SUser implements Serializable
 		String refri = "";
 		
 		for(int i =0;i<this.getMyRefrigerator().size();i++)
+		{
+			refri +=getMyRefrigerator().get(i).getName()+"/";
 			refri +=getMyRefrigerator().get(i).getSerial()+"/";
-		
+		}
 		return ID+"/"+name+"/"+PW+"/myRefrigerator/"+refri;
 	}
 	

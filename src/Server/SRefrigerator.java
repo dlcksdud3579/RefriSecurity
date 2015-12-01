@@ -9,9 +9,10 @@ public class SRefrigerator implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String ownerID;
 	private String name;
 	private int serial;
+	private String ownerID;
+
 
 	private ArrayList<SFood> foodList;
 	private ArrayList<SFood> emptyFoodList;
@@ -98,7 +99,7 @@ public class SRefrigerator implements Serializable{
 	{
 		SUser tempUser = null;
 		for(int i =0;i<this.getUserList().size();i++)
-			if(this.getUserList().get(i).getID() == id)
+			if(this.getUserList().get(i).getID().equals( id))
 				tempUser=this.getUserList().get(i);
 		return tempUser;
 	}
@@ -106,7 +107,7 @@ public class SRefrigerator implements Serializable{
 	{
 		SFood tempFood = null;
 		for(int i =0;i<this.getFoodList().size();i++)
-			if(this.getFoodList().get(i).getName() == name)
+			if(this.getFoodList().get(i).getName().equals(name))
 				tempFood=this.getFoodList().get(i);
 		return tempFood;
 	}
@@ -114,7 +115,7 @@ public class SRefrigerator implements Serializable{
 	{
 		SFood tempFood = null;
 		for(int i =0;i<this.getEmptyFoodList().size();i++)
-			if(this.getEmptyFoodList().get(i).getName() == name)
+			if(this.getEmptyFoodList().get(i).getName().equals(name))
 				tempFood=this.getEmptyFoodList().get(i);
 		return tempFood;
 	}
@@ -127,15 +128,15 @@ public class SRefrigerator implements Serializable{
 		String userList = "";
 		
 		for(int i=0; i<this.foodList.size();i++)
-			foodList +=this.foodList.get(i).toString()+"/";
+			foodList +=this.foodList.get(i).toString();
 		
 		for(int i=0; i<this.emptyFoodList.size();i++)
-			emptyFoodList +=this.emptyFoodList.get(i).toString()+"/";
+			emptyFoodList +=this.emptyFoodList.get(i).toString();
 		
 		for(int i=0; i<this.userList.size();i++)
 			userList +=this.userList.get(i).getID()+"/";
 		
-		return  ownerID+"/foodList/"+foodList+"/emptyFoodList/" +emptyFoodList+"/userList/" + userList+"/";
+		return name+"/"+ serial+"/"+ ownerID+"/"+"foodList/"+foodList+"emptyFoodList/" +emptyFoodList+"userList/" + userList;
 	}
 	
 }

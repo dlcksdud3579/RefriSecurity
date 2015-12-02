@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import Server.SUser;
 import Client.*;
+import HumanComputerInteraction.ConsoleUI;
 import common.*;
 
 
@@ -36,8 +37,11 @@ public class ClientConsole implements ChatIF
    * The instance of the client that created this ConsoleChat.
    */
   ChatClient client;
-
-  
+  private ConsoleUI cui;
+  private CUser nowUser;
+  private String tempMsg;
+  private boolean flag;
+  private boolean waitBool;
   //Constructors ****************************************************
 
   /**
@@ -58,6 +62,8 @@ public class ClientConsole implements ChatIF
                 + " Terminating client.");
       System.exit(1);
     }
+    
+    this.flag = false;
   }
 
   
@@ -67,14 +73,14 @@ public class ClientConsole implements ChatIF
    * This method waits for input from the console.  Once it is 
    * received, it sends it to the client's message handler.
    */
-  public void accept() 
+  public void accept(String msg) 
   {
     try
     {
     // BufferedReader fromConsole = 
     //    new BufferedReader(new InputStreamReader(System.in));
-     
-     String msg = new String("addUser/ay47/3579/이찬영/"); // 유저 추가 표준 
+    
+    // String msg = new String("addUser/ay47/3579/이찬영/"); // 유저 추가 표준 
     // String msg = new String("addFood/0/문어/1/1.0/2015/11/29/2015/11/30/삼시세끼/"); // 유저 추가 표준
       
 
@@ -99,10 +105,50 @@ public class ClientConsole implements ChatIF
    */
   public void display(String message) 
   {
-    System.out.println("> " + message);
+	  System.out.println(">" + message);
+	  receiveMsg(message);
   }
 
+  public void receiveMsg(String msg) // 메세지를 받아서 해석하는 함수
+  {
+	  this.tempMsg = msg;
+	  String cmd = msg;
+	  
+	  
+	  if (msg.equals("true")) {
+		  this.flag = true;
+		  setWaitBool(false);
+		  return;
+	  }
+	  else if (msg.equals("false")) {
+		  this.flag = false;
+		  setWaitBool(false);
+		  return;
+	  }
+	  
+	  cmd = divideString();
+	  
+	  switch (cmd)
+	  {
+
+	  case "User":
+		  
+		  break;
+	  }
+	  setWaitBool(false);
+  }
   
+  public String divideString() //받아온 데이터  클래스의 종류를 알아내는 함수 
+  {
+	  String rv = null ; // 리턴 밸류 여기에 클래스를 저장 후 
+	  int i=0;
+	  
+	  for(; tempMsg.charAt(i) !='/';i++);
+	  rv = tempMsg.substring(0, i);
+	  tempMsg = tempMsg.substring(i+1, tempMsg.length());
+	  System.out.println(rv);
+	  return rv;
+  }
   //Class methods ***************************************************
   
   /**
@@ -133,8 +179,11 @@ public class ClientConsole implements ChatIF
     }
     
     ClientConsole chat= new ClientConsole(host, port);
+    ConsoleUI cui = new ConsoleUI();
+    chat.setCui( cui );
+    cui.setClientConsole(chat);
     
-    chat.accept();  //Wait for console data
+    cui.start();
   }
   
   
@@ -148,6 +197,37 @@ public class ClientConsole implements ChatIF
 	  
 	return port;
   }
+
+
+  public ConsoleUI getCui() {
+	  return cui;
+  }
+
+
+  public void setCui(ConsoleUI cui) {
+	  this.cui = cui;
+  }
+
+
+public boolean isFlag() {
+	return flag;
+}
+
+
+public void setFlag(boolean flag) {
+	this.flag = flag;
+}
+
+
+public boolean isWaitBool() {
+	return waitBool;
+}
+
+
+public void setWaitBool(boolean waitBool) {
+	this.waitBool = waitBool;
+}
+  
   
 }
 //End of ConsoleChat class

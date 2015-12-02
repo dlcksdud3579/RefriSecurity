@@ -6,13 +6,13 @@ import Client.*;
 
 public class ConsoleUI {
 	
+	private ClientConsole clientConsole;
 	private Scanner scan;
 	private CUser 	nowUser;
-	//login class
-	private CLogin login;
 	
 	// constructor /////////////////////////////////////////////
 	public ConsoleUI() {
+		setClientConsole( null );
 		this.scan = new Scanner( System.in );
 		setUser( null );
 	}
@@ -106,8 +106,10 @@ public class ConsoleUI {
 			pw = scan.next();
 			
 			// 아이디 패스워드 체크를 통해 로그인을 허용한다.
-			login = new CLogin(id, pw);
-			flag = login.LoginCheck();
+			//login = new CLogin(id, pw);
+			//flag = login.LoginCheck();
+			String msg = "getUser/" + id;
+			clientConsole.accept(msg);
 			
 			if (flag == -1) {
 				System.out.printf(" This [%s] ID does not exit\n\n", id);
@@ -154,14 +156,20 @@ public class ConsoleUI {
 			name = scan.next();
 			
 			// CLogIn클래스를 통해 통신을해서 아이디와 비밀번호를 이렇게 입력해도 되는지 체크한다.
-			login = new CLogin(id, pw, name);
-			flag = login.SignUpCheck();
+			//login = new CLogin(id, pw, name);
+			//flag = login.SignUpCheck();
+			clientConsole.accept("addUser/" + id + "/" + pw + "/" + name + "/");
+			clientConsole.setWaitBool(true);
 			
-			if (flag == 1)
+			while ( clientConsole.isWaitBool() );
+			
+			if (clientConsole.isFlag())
 			{
-				login.SignUp();//sign up, 별도의 성공멘트를 추가해야한다.
+				System.out.println("Sing Up Success!!");
+				break;
+				//login.SignUp();//sign up, 별도의 성공멘트를 추가해야한다.
 			}
-			else if (flag == -1)
+			else if ( !clientConsole.isFlag() )
 			{
 				System.out.printf(" !! This [%s] ID already exits.\n", id);
 				System.out.println(" !! Please reenter ID and Password.");
@@ -197,4 +205,12 @@ public class ConsoleUI {
 	{
 		this.nowUser = user;
 	}
+	public ClientConsole getClientConsole() {
+		return clientConsole;
+	}
+	public void setClientConsole(ClientConsole clientConsole) {
+		this.clientConsole = clientConsole;
+	}
+
+	
 }

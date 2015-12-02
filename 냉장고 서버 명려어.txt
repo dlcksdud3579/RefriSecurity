@@ -14,8 +14,11 @@
      KickRefri/냉장고 시리얼/오너아이디/초대할사람아이디
      
      getUser/유저아이디/
+     (User/유저아이디/비밀번호/이름/)
      getRefrigerator/ 냉장고시리얼/
+     (Refrigerator/이름/시리얼/푸드리스트/빈푸드리스트/유저리스트/)
      getFood/냉장고시리얼/음식이름/
+     (Food/이름/양/퍼센트/)
      getUserList/
      getRefrigeratorList/
      getFoodList/냉장고 시리얼/

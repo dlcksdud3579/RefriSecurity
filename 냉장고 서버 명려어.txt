@@ -1,7 +1,7 @@
      addUser/User.Tostirng (유저 아이디/비밀번호/이름/)
      addFood/내장고시리얼/food.toString(이름/넘버/퍼센트/유통기한/ 보관시작/코멘트/)
      addEmptyFood/냉장고리스트/ food.tostring(이름/넘버/퍼센트/유통기한(년/월/일)/보관시작(년/월/일)/코멘트/)
-     addRefri/이름/번호/냉장고 오너아이디/
+     addRefri/이름/냉장고 오너아이디/
      addEmptyFood/냉장고시리얼/ food.tostring(이름/넘버/퍼센트/유통기한(년/월/일)/보관시작(년/월/일)/코멘트/)
     
      removeUser/유저네임/

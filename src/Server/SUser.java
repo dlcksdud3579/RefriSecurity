@@ -35,16 +35,6 @@ public class SUser implements Serializable
 		myRefrigerator = new ArrayList<SRefrigerator>();
 	}
 
-
-	public void CreateRefrigerator()
-	{
-		
-	}
-	public void DeleteRefrigerator()
-	{
-		
-	}
-	
 	public String getID() {
 		return ID;
 	}

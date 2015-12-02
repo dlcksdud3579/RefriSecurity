@@ -17,7 +17,7 @@ public class SFood implements Serializable{
 	private Date startDate;
 	private String comment;
 	
-	public void ChangeFood()
+	public void ChangeFood(SFood Food)
 	{
 		
 	}

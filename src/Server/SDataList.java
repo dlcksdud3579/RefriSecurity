@@ -120,7 +120,7 @@ public class SDataList implements Serializable{
 		}
 		return tempRefri;
 	}
-	 
+	  
 	public SUser searchSUser(String id)
 	{
 		SUser tempUser = null;

@@ -2,6 +2,7 @@ package Server;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SRefrigerator implements Serializable{
 	/**
@@ -11,9 +12,7 @@ public class SRefrigerator implements Serializable{
 	
 	private String name;
 	private int serial;
-	private String ownerID;
-
-
+	
 	private ArrayList<SFood> foodList;
 	private ArrayList<SFood> emptyFoodList;
 	private ArrayList<SUser> userList;
@@ -45,13 +44,6 @@ public class SRefrigerator implements Serializable{
 	
 
 
-	public String getOwnerID() {
-		return ownerID;
-	}
-
-	public void setOwnerID(String ownerID) {
-		this.ownerID = ownerID;
-	}
 
 	public ArrayList<SFood> getFoodList() {
 		return foodList;
@@ -118,24 +110,37 @@ public class SRefrigerator implements Serializable{
 		for(int i=0; i<this.userList.size();i++)
 			userList +=this.userList.get(i).getID()+"/";
 		
-		return name+"/"+ serial+"/"+ ownerID+"/"+"foodList/"+foodList+"emptyFoodList/" +emptyFoodList+"userList/" + userList;
-	}
-
-
-	
-	public void DeleteeFood()
-	{
-		
+		return name+"/"+ serial +"/"+"foodList/"+foodList+"emptyFoodList/" +emptyFoodList+"userList/" + userList;
 	}
 	
-	public void MoveToEmptyFoodList()
+	public void MoveToEmptyFoodList(SFood food)
 	{
-		
+		food.setStartDate(new Date());
+		addEmptyFood(food);
+	}
+	
+	public void checkEmptyFoodList()
+	{
+		Date CurData =  new Date();
+		int CurDay = CurData.getYear()*365 + CurData.getMonth()*30+CurData.getDay();
+		Date FoodDate = null;
+		int FoodDay =0;;
+		for(int i=0;i<this.getEmptyFoodList().size();i++)
+		{
+			FoodDate = this.getEmptyFoodList().get(i).getStartDate();
+			FoodDay = FoodDate.getYear()*365 + FoodDate.getMonth()*30+FoodDate.getDay();
+			
+			if(CurDay -FoodDay >= 7)
+			{
+				removeEmptyFood(getEmptyFoodList().get(i));
+			}
+		}
+				
 	}
 	
 	public void InviteOtherUser(String id,SUser user)
 	{
-		if(getOwnerID().equals(id) == false) //오너 넘버 체크 
+		if(this.getUserList().get(0).getID().equals(id) == false) //오너 넘버 체크 
 			return;
 		 // 초대 멤버버 
 		if(user == null)
@@ -145,7 +150,7 @@ public class SRefrigerator implements Serializable{
 	}
 	public void KickOtherUser(String id,SUser user)
 	{
-		if(getOwnerID().equals(id) == false) //오너 넘버 체크 
+		if(this.getUserList().get(0).getID().equals(id) == false) //오너 넘버 체크 
 			return;
 		 // 강퇴 멤버
 		if(user == null)
@@ -158,14 +163,21 @@ public class SRefrigerator implements Serializable{
 	{
 		this.getUserList().add(user);
 	}
-	public void addFood(SFood food)
+	public boolean addFood(SFood food)
 	{
+		if(this.searchFood(food.getName()) != null)
+			return false;
 		this.getFoodList().add(food);
+		return true;
 	}
-	public void addEmptyFood(SFood food)
+	public boolean addEmptyFood(SFood food)
 	{
+		if(this.searchEmptyFood(food.getName()) != null)
+			return false;
 		this.getEmptyFoodList().add(food);
+		return true;
 	}
+	
 	public void removeUser(SUser user)
 	{
 		this.getUserList().remove(user);
@@ -182,6 +194,4 @@ public class SRefrigerator implements Serializable{
 			return;
 		this.getEmptyFoodList().remove(food);
 	}
-	
-	
 }

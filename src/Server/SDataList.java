@@ -132,16 +132,20 @@ public class SDataList implements Serializable{
 		return tempUser;
 	}
 
-	public void addUser(SUser user)
+	public boolean addUser(SUser user)
 	{
+		if(this.searchSUser(user.getID()) !=null)
+			return false;
 		this.getUserList().add(user);
+		return true;
 	}
-	public void addRefri(SRefrigerator refri)
+	public void addRefri(SRefrigerator refri,String Id)
 	{
-		
-		SUser tempUser = searchSUser(refri.getOwnerID());
+		SUser tempUser = searchSUser(Id);
 		if(tempUser ==null)
 			return;
+		int serial = this.getRefriList().size()+100; // 
+		refri.setSerial(serial);
 		
 		refri.addUser(tempUser);
 		tempUser.addMyRefri(refri);

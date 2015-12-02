@@ -77,7 +77,7 @@ public class TestMain implements ChatIF
      addUser/User.Tostirng (유저 아이디/비밀번호/이름/)
      addFood/내장고시리얼/food.toString(이름/넘버/퍼센트/유통기한/ 보관시작/코멘트/)
      addEmptyFood/냉장고리스트/ food.tostring(이름/넘버/퍼센트/유통기한(년/월/일)/보관시작(년/월/일)/코멘트/)
-     addRefri/이름/번호/냉장고 오너아이디/
+     addRefri/이름/냉장고 오너아이디/
      addEmptyFood/냉장고시리얼/ food.tostring(이름/넘버/퍼센트/유통기한(년/월/일)/보관시작(년/월/일)/코멘트/)
     
      removeUser/유저네임/
@@ -86,8 +86,8 @@ public class TestMain implements ChatIF
      removeEmptyFood/냉장고시리얼/음식이름/
      removeMyRefri/유저아이디/냉장고시리얼/
      
-     InviteRefri/냉장고 시리얼/오너아이디 / 초대할사람아이디
-     KickRefri/냉장고 시리얼/오너아이디/초대할사람아이디
+     InviteRefri/냉장고 시리얼/오너아이디 / 초대할사람아이디/
+     KickRefri/냉장고 시리얼/오너아이디/초대할사람아이디/
      
      getUser/유저아이디/
      getRefrigerator/ 냉장고시리얼/

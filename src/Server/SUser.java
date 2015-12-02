@@ -101,7 +101,7 @@ public class SUser implements Serializable
 	{
 		if(refri == null)
 			return;
-		if(refri.getOwnerID().equals(getID()))
+		if(refri.getUserList().get(0).getID() == this.getID())
 		{
 			for(int i=0;i<refri.getUserList().size();i++)
 			{

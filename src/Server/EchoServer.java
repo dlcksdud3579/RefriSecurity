@@ -327,7 +327,7 @@ public class EchoServer extends AbstractServer
 		tempUser = m_data.searchSUser(divideString()); // 유저 아이디로 서치 
 		if(tempUser == null)
 			break;
-		if(tempUser.getPW() != divideString())
+		if(tempUser.getPW().equals(divideString()))
 			break;
 		tempMsg = "User/"+tempUser.toString();
 		sendtoOneClient("true",client);

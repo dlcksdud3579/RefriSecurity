@@ -177,6 +177,7 @@ public class EchoServer extends AbstractServer
 		if( m_data.addUser(tempUser)== false) // 유저 추가 
 			break;
 		sendtoOneClient("true",client);
+		sendtoOneClient("true",client);
 		return;
 		
 	case "addRefri":
@@ -185,6 +186,7 @@ public class EchoServer extends AbstractServer
 		tempRefri.setName(divideString());
 		String OwnerID = divideString();
 		m_data.addRefri(tempRefri,OwnerID); // 레프리 추가 
+		sendtoOneClient("true",client);
 		sendtoOneClient("true",client);
 		return;
 		
@@ -205,6 +207,7 @@ public class EchoServer extends AbstractServer
 		tempFood.setComment(divideString());	// 코멘트
 		
 		tempRefri.addFood(tempFood); // 푸드 추가 
+		sendtoOneClient("true",client);
 		sendtoOneClient("true",client);
 		return;
 		
@@ -233,11 +236,13 @@ public class EchoServer extends AbstractServer
 		tempUser =m_data.searchSUser(divideString());
 		m_data.removeUser(tempUser);
 		sendtoOneClient("true",client);
+		sendtoOneClient("true",client);
 		return;
 		
 	case "removeRefri": // 사라져라 냉자고 /removeRefri/냉장고시리얼/
 		tempRefri = m_data.searchRefrigerator(Integer.parseInt(divideString()));
 		m_data.removeRefri(tempRefri);
+		sendtoOneClient("true",client);
 		sendtoOneClient("true",client);
 		return;
 		
@@ -250,6 +255,7 @@ public class EchoServer extends AbstractServer
 			break;
 		
 		tempRefri.removeFood(tempFood);
+		sendtoOneClient("true",client);
 		sendtoOneClient("true",client);
 		return;
 		
@@ -272,6 +278,7 @@ public class EchoServer extends AbstractServer
 		if(tempRefri.getUserList().get(0).equals(tempUser.getID()))
 			m_data.removeRefri(tempRefri);
 		sendtoOneClient("true",client);
+		sendtoOneClient("true",client);
 		return;
 		
 	case "InviteRefri": // 아몰랑 초대 /InviteRefri/냉장고 시리얼/오너아이디 / 초대할사람아이디
@@ -280,6 +287,7 @@ public class EchoServer extends AbstractServer
 			break;
 		tempUser = m_data.searchSUser(divideString());
 		tempRefri.InviteOtherUser(divideString(),tempUser);
+		sendtoOneClient("true",client);
 		sendtoOneClient("true",client);
 		return;
 		
@@ -290,6 +298,7 @@ public class EchoServer extends AbstractServer
 		tempUser = m_data.searchSUser(divideString());
 		tempRefri.KickOtherUser(divideString(),tempUser);
 		sendtoOneClient("true",client);
+		sendtoOneClient("true",client);
 		return;
 		
 	case "checkEmptyFoodList":  // 냉장고에 있는 오래된 빈 음식 리스트 삭제   / checkEmptyFoodList/냉장고시리얼/
@@ -297,6 +306,7 @@ public class EchoServer extends AbstractServer
 		if(tempRefri == null)
 			break;
 		tempRefri.checkEmptyFoodList();
+		sendtoOneClient("true",client);
 		sendtoOneClient("true",client);
 		return;
 		
@@ -320,6 +330,7 @@ public class EchoServer extends AbstractServer
 		chgFood.setComment(divideString());	// 코멘트
 		
 		tempFood.ChangeFood(chgFood);
+		sendtoOneClient("true",client);
 		sendtoOneClient("true",client);
 		return;
 		

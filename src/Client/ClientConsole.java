@@ -4,6 +4,7 @@ package Client;
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.Date;
 import java.util.Scanner;
 
 import Server.SUser;
@@ -106,7 +107,7 @@ public class ClientConsole implements ChatIF
    */
   public void display(String message) 
   {
-	  //System.out.println(">" + message);
+	  System.out.println(">" + message);
 	  receiveMsg(message);
   }
 
@@ -132,11 +133,71 @@ public class ClientConsole implements ChatIF
 	  
 	  switch (cmd)
 	  {
+	  case "Refrigerator" :
+		 CRefrigerator temp = null;
+		 divideString();
+		 temp = nowUser.searchRefrigerator( Integer.parseInt(divideString()));
+		 
+		 if (temp == null) {
+			 System.out.println(">>> error not found the refrigerator");
+			 break;
+		 }
+			 
+		 String tStr = divideString();
+		 
+		 while ( !tStr.equals("emptyFoodList") ) 
+		 {
+			 CFood food = new CFood();
+			 //name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
+			 food.setName( divideString() );
+			 food.setNumber( Integer.parseInt(divideString()) );
+			 food.setPercent( Float.parseFloat(divideString()) );
+			 food.setExprieDate( new Date( 
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ) ) );
+			 food.setStartDate( new Date( 
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ) ) );
+			 food.setComment( divideString() );
+			 
+			 temp.getFoodList().add( food );
+			 
+			 tStr = divideString();
+		 }
+		 
+		 while ( !tStr.equals("userList") ) 
+		 {
+			 CFood food = new CFood();
+			 //name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
+			 food.setName( divideString() );
+			 food.setNumber( Integer.parseInt(divideString()) );
+			 food.setPercent( Float.parseFloat(divideString()) );
+			 food.setExprieDate( new Date( 
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ) ) );
+			 food.setStartDate( new Date( 
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ),
+					 Integer.parseInt( divideString() ) ) );
+			 food.setComment( divideString() );
+			 
+			 temp.getEmptyFoodList().add( food );
+			 
+			 tStr = divideString();
+		 }
+		 
+		 System.out.printf(">>> [%s] refri add success\n\n", temp.getName());
+		 break;
+		  
 	  case "User":
-		  this.login = new CLogin(this);
-		  this.nowUser = login.createUser(this.tempMsg);
-		  cui.refriListScreen();
-		  break;
+		 this.login = new CLogin(this);
+		 this.nowUser = login.createUser(this.tempMsg);
+		 cui.nextScreen();
+		 cui.refriListScreen();
+		 break;
 	  }
 	  setWaitBool(false);
   }

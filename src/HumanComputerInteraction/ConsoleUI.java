@@ -81,6 +81,10 @@ public class ConsoleUI {
 		case 2 : // sign up º±≈√
 			signUpScreen();
 			break;
+		case 3 :
+			System.out.println("!! Thanks for using this program !!");
+			System.exit(1);
+			break;
 		}
 	}
 	
@@ -152,8 +156,8 @@ public class ConsoleUI {
 			//login = new CLogin(id, pw, name);
 			//flag = login.SignUpCheck();
 			clientConsole.accept("addUser/" + id + "/" + pw + "/" + name + "/");
-			clientConsole.setWaitBool(true);
 			
+			clientConsole.setWaitBool(true);
 			while ( clientConsole.isWaitBool() );
 			
 			if (clientConsole.isFlag())
@@ -179,6 +183,164 @@ public class ConsoleUI {
 	public void refriListScreen()
 	{
 		System.out.printf("Hello \" %s \" user!\n", clientConsole.getNowUser().getName());
+		
+		System.out.println("***************************************");
+		System.out.println("*      Refrigerator Choice Screen     *");
+		System.out.println("*                                     *");
+		System.out.println("* 0. Exit                             *");
+		System.out.println("* 1. View your refrigerators          *");
+		System.out.println("* 2. Create a new refrigerator        *");
+		System.out.println("* 3. Delete a refrigerator            *");
+		System.out.println("***************************************");
+		
+		while (true)
+		{
+			System.out.printf("input :: ");
+			int flag = scan.nextInt();
+			
+			if (flag == 0) {
+				System.out.println("!! Thanks for using this program !!");
+				System.exit(1);
+				return;
+			}
+			else if (flag == 1) {
+				viewRefriScreen();
+				return;
+			}
+			else if (flag == 2) {
+				createRefriScreen();
+				return;
+			}
+			else if (flag == 3) {
+				DeleteRefriScreen();
+				return;
+			}
+			else  {
+				
+			}
+		}
+	}
+	
+	public void createRefriScreen()
+	{
+		System.out.println("***************************************");
+		System.out.println("* Create a new refrigerator           *");
+		System.out.println("*   Enter a name of the refrigerator  *");
+		System.out.println("***************************************");
+		
+		System.out.printf(" name : ");
+		String name = scan.next();
+		
+		
+		clientConsole.accept("addRefri/" + name + "/" + clientConsole.getNowUser().getID() + "/");
+		clientConsole.setWaitBool(true);
+		while ( clientConsole.isWaitBool() );
+		
+		if ( clientConsole.isFlag() ) {
+			System.out.println("Create Success!\n");
+		}
+		else {
+			System.out.println("Create Fail....\n");
+		}
+		
+		//refriListScreen();
+	}
+	
+	public void DeleteRefriScreen()
+	{
+		System.out.println("***************************************");
+		System.out.println("* Delete a  refrigerator           *");
+		System.out.println("*   Enter a number of the refrigerator  *");
+		System.out.println("***************************************");
+		
+		System.out.printf(" name : ");
+		int index = scan.nextInt();
+		
+		
+		clientConsole.accept("rmoveRefri/"+ clientConsole.getNowUser().getID() + 
+				"/"+clientConsole.getNowUser().getMyRefrigerator().get(index).getSerial()+ "/");
+		clientConsole.setWaitBool(true);
+		while ( clientConsole.isWaitBool() );
+		
+		if ( clientConsole.isFlag() ) {
+			System.out.println("Create Success!\n");
+		}
+		else {
+			System.out.println("Create Fail....\n");
+		}
+		
+		//refriListScreen();
+	}
+	
+	public void viewRefriScreen()
+	{
+		int i, flag;
+		
+		System.out.println("***************************************"); //39
+		System.out.println("*        Your refrigerator list       *");
+		System.out.println("*   Enter a name of the refrigerator  *");
+		System.out.println("*                                     *");
+		
+		for(i =0;i<clientConsole.getNowUser().getMyRefrigerator().size();i++) {
+			String ss = "* " + i + " : " + 
+						clientConsole.getNowUser().getMyRefrigerator().get(i).getName();
+			
+			for (int j = ss.length(); j < 38; j++)
+				ss += " ";
+			ss += "*";
+			
+			System.out.println(ss);
+		}
+		
+		System.out.println("***************************************");
+		
+		while (true)
+		{
+			System.out.printf(" Input a refrigerator number you want :: ");
+			flag = scan.nextInt();
+			
+			if(flag>i)
+				continue;
+			else
+				break;
+		}
+		
+		viewRefriInerScreen(clientConsole.getNowUser().getMyRefrigerator().get(flag));
+	}
+	public void viewRefriInerScreen(CRefrigerator refri)
+	{
+		int i;
+		System.out.println("***************************************"); // 39
+		System.out.println("*       your refrigeratorIner         *");
+		System.out.println("*   Enter a name of the refrigerator  *");
+		
+		refri.setClientConsole(clientConsole);
+		refri.getRefriInfoFromServer();
+		
+		for(i =0;i<refri.getFoodList().size();i++)
+		{
+			String ss = "* " + i + ":" + refri.getFoodList().get(i).toString();
+			
+			for (int j = ss.length(); j < 38; j++)
+				ss += " ";
+			ss += "*";
+					
+			System.out.println( ss );
+		}
+		
+		System.out.println("***************************************");
+		
+		
+		while (true)
+		{
+			System.out.printf(" Input a refrigerator number you want :: ");
+			int flag = scan.nextInt();
+			
+			if(flag>i)
+				continue;
+			
+		}
+		
 	}
 	
 	

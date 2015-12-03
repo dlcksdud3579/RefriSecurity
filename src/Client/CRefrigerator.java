@@ -10,18 +10,24 @@ public class CRefrigerator {
 	
 	private ArrayList<CFood> foodList;
 	private ArrayList<CFood> emptyFoodList;
-	private ArrayList<CUser> userList;
+	
+	public CRefrigerator() {
+		setName(null);
+		setSerial(0);
+		setClientConsole(null);
+		setFoodList(new ArrayList<CFood>());
+		setEmptyFoodList(new ArrayList<CFood>());
+	}
 	
 	public CRefrigerator(String name, int serial,
 			ArrayList<CFood> foodList, ArrayList<CFood> emptyFoodList,
-			ArrayList<CUser> userList, ClientConsole clientConsole) {
+			ClientConsole clientConsole) {
 		super();
 		this.name = name;
 		this.serial = serial;
 		this.clientConsole = clientConsole;
 		this.foodList = foodList;
 		this.emptyFoodList = emptyFoodList;
-		this.userList = userList;
 	}
 
 	public boolean getRefriInfoFromServer()
@@ -51,7 +57,7 @@ public class CRefrigerator {
 		
 	}
 	
-	public boolean DeleteeFood(CFood food)
+	public boolean DeleteFood(CFood food)
 	{
 		clientConsole.accept("removeFood/"+serial+"/"+food.getName()+"/");
 		clientConsole.setWaitBool(true);
@@ -157,13 +163,6 @@ public class CRefrigerator {
 		this.emptyFoodList = emptyFoodList;
 	}
 
-	public ArrayList<CUser> getUserList() {
-		return userList;
-	}
-
-	public void setUserList(ArrayList<CUser> userList) {
-		this.userList = userList;
-	}
 
 	public ClientConsole getClientConsole() {
 		return clientConsole;

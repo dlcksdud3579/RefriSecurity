@@ -1,8 +1,5 @@
 package Client;
 
-import Server.SDataList;
-import Server.SUser;
-
 public class CLogin {
 ///15-11-27 ¹®¼·
 	
@@ -17,7 +14,7 @@ public class CLogin {
 	public CUser createUser(String msg) {
 		//System.out.println(msg);
 		this.tempMsg = msg;
-		CUser tempUser = new CUser(divideString(), divideString(), divideString());
+		CUser tempUser = new CUser(divideString(), divideString(), divideString(), this.clientConsole);
 		//System.out.println(tempMsg);
 		
 		divideString();
@@ -34,6 +31,8 @@ public class CLogin {
 			
 			tempUser.getMyRefrigerator().add(newRefri);
 		}
+		
+		//tempUser.loadRefrigerator();
 		
 		return tempUser;
 	}

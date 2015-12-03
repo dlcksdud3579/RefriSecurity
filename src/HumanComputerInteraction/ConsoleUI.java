@@ -1,5 +1,6 @@
 package HumanComputerInteraction;
 
+import java.util.Date;
 import java.util.Scanner;
 
 import Client.*;
@@ -319,15 +320,18 @@ public class ConsoleUI {
 	{
 		int i;
 		System.out.println("***************************************"); // 39
-		System.out.println("*       your refrigeratorIner         *");
-		System.out.println("*   Enter a name of the refrigerator  *");
+		System.out.printf ("*       [%s] refrigerator        *", refri.getName());
+		System.out.println("*                                     *");
+		System.out.println("*          Current Food List          *");
+		System.out.println("*                                     *");
 		
 		refri.setClientConsole(clientConsole);
+		clientConsole.setNowRefri(refri);
 		refri.getRefriInfoFromServer();
 		
 		for(i =0;i<refri.getFoodList().size();i++)
 		{
-			String ss = "* " + i + ":" + refri.getFoodList().get(i).toString();
+			String ss = "* " + i + " : " + refri.getFoodList().get(i).getName();
 			
 			for (int j = ss.length(); j < 38; j++)
 				ss += " ";
@@ -338,19 +342,76 @@ public class ConsoleUI {
 		
 		System.out.println("***************************************");
 		
+		System.out.println("***************************************");
+		System.out.println("*          Console Input type         *");
+		System.out.println("*                                     *");
+		System.out.println("* 0. Return                           *");
+		System.out.println("* 1. Choose a food for more info.     *");
+		System.out.println("* 2. Add food                         *");
+		System.out.println("*                                     *");
+		System.out.println("***************************************");
+		
+		int flag = -1;
 		
 		while (true)
 		{
-			System.out.printf(" Input a refrigerator number you want :: ");
-			int flag = scan.nextInt();
+			System.out.printf(" Input :: ");
+			flag = scan.nextInt();
 			
-			if(flag>i)
-				continue;
+			if( flag >= 0 && flag <= 3)
+				break;
+			else 
+				System.out.println(" !! Error: OutOfBounds, Re-enter input !!");
 			
 		}
 		
+		switch (flag)
+		{
+		case 0:
+			
+			break;
+		case 1:
+			
+			break;
+		case 2:
+			addFoodScreen();
+			break;
+		}
 	}
 	
+	public void addFoodScreen()
+	{
+		nextScreen();
+		
+		System.out.println("***************************************");
+		System.out.println("*          Add a food screen          *");
+		System.out.println("***************************************");
+		
+		CFood food = new CFood();
+
+		
+		//food name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
+		System.out.printf(" Name	: ");
+		food.setName( scan.next() );
+		System.out.printf(" Number	: ");
+		food.setNumber( scan.nextInt() );
+		System.out.printf(" Percent	: ");
+		food.setPercent( scan.nextFloat() );
+		System.out.printf(" Expire Date	: \n");
+		System.out.printf("				Year	: ");
+		int year = scan.nextInt();
+		System.out.printf("				Month	: ");
+		int month = scan.nextInt() - 1;
+		System.out.printf("				Day		: ");
+		int day = scan.nextInt();
+		food.setExprieDate( new Date(year, month, day) );
+		food.setStartDate( new Date() );
+		System.out.printf(" Comment : ");
+		food.setComment( scan.next() );
+		
+		clientConsole.getNowRefri().CreateFood(food);
+		viewRefriInerScreen(clientConsole.getNowRefri());
+	}
 	
 	public void nextScreen()
 	{

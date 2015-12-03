@@ -49,8 +49,7 @@ public class CRefrigerator {
 		while(clientConsole.isWaitBool());
 		if(clientConsole.isFlag()==true)
 		{
-			if(getRefriInfoFromServer() ==true)
-				return false;
+			getFoodList().add(food);
 			return true;
 		}
 		return false;

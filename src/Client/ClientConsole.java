@@ -40,6 +40,7 @@ public class ClientConsole implements ChatIF
   ChatClient client;
   private ConsoleUI cui;
   private CUser nowUser;
+  private CRefrigerator nowRefri;
   private CLogin login;
   private String tempMsg;
   private boolean flag;
@@ -89,9 +90,9 @@ public class ClientConsole implements ChatIF
       //while (true) 
       //{
         //message = fromConsole.readLine();
-    	System.out.println(">accept> " + msg);
+    	//System.out.println(">accept> " + msg);
       client.handleMessageFromClientUI(msg); // 클라이언트에서 처리
-      System.out.println(">accept> complete");
+      //System.out.println(">accept> complete");
       //}
     } 
     catch (Exception ex) 
@@ -109,9 +110,9 @@ public class ClientConsole implements ChatIF
    */
   public void display(String message) 
   {
-	  System.out.println(">display>" + message);
+	  //System.out.println(">display>" + message);
 	  receiveMsg(message);
-	  System.out.println(">display> complete");
+	  //System.out.println(">display> complete");
   }
 
   public void receiveMsg(String msg) // 메세지를 받아서 해석하는 함수
@@ -145,14 +146,16 @@ public class ClientConsole implements ChatIF
 			 System.out.println(">>> error not found the refrigerator");
 			 break;
 		 }
-			 
+		 
+		 divideString();
+		 
 		 String tStr = divideString();
 		 
 		 while ( !tStr.equals("emptyFoodList") ) 
 		 {
 			 CFood food = new CFood();
 			 //name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
-			 food.setName( divideString() );
+			 food.setName( tStr );
 			 food.setNumber( Integer.parseInt(divideString()) );
 			 food.setPercent( Float.parseFloat(divideString()) );
 			 food.setExprieDate( new Date( 
@@ -170,11 +173,13 @@ public class ClientConsole implements ChatIF
 			 tStr = divideString();
 		 }
 		 
+		 tStr = divideString();
+		 
 		 while ( !tStr.equals("userList") ) 
 		 {
 			 CFood food = new CFood();
 			 //name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
-			 food.setName( divideString() );
+			 food.setName( tStr );
 			 food.setNumber( Integer.parseInt(divideString()) );
 			 food.setPercent( Float.parseFloat(divideString()) );
 			 food.setExprieDate( new Date( 
@@ -192,19 +197,21 @@ public class ClientConsole implements ChatIF
 			 tStr = divideString();
 		 }
 		 
-		 System.out.printf(">>> [%s] refri add success\n\n", temp.getName());
+		 this.nowRefri = temp;
+		 
+		 //System.out.printf(">>> [%s] refri add success\n\n", temp.getName());
 		 break;
 		  
 	  case "User":
 		 this.login = new CLogin(this);
 		 this.nowUser = login.createUser(this.tempMsg);
 		 cui.nextScreen();
-		 System.out.println(">receiveMsg>User> complete");
+		 //System.out.println(">receiveMsg>User> complete");
 		 break;
 	  }
 	  setWaitBool(false);
 	  
-	  System.out.println(">receiveMsg> Complete");
+	  //System.out.println(">receiveMsg> Complete");
   }
   
   public String divideString() //받아온 데이터  클래스의 종류를 알아내는 함수 
@@ -305,6 +312,16 @@ public CUser getNowUser() {
 
 public void setNowUser(CUser nowUser) {
 	this.nowUser = nowUser;
+}
+
+
+public CRefrigerator getNowRefri() {
+	return nowRefri;
+}
+
+
+public void setNowRefri(CRefrigerator nowRefri) {
+	this.nowRefri = nowRefri;
 }
   
   

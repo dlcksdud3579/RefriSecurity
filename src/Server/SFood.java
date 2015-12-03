@@ -77,6 +77,9 @@ public class SFood implements Serializable{
 	@Override
 	public String toString()
 	{
-		return 	name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
+		 	return 	name+"/"+number+"/"+percent+"/"+exprieDate.getYear()+"/"+
+				exprieDate.getMonth()+"/"+exprieDate.getDay()+"/"+
+				startDate.getYear()+"/"+startDate.getMonth()+"/"
+				+startDate.getDay()+"/"+comment+"/";
 	}
 }

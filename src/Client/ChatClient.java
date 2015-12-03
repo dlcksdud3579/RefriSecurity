@@ -67,9 +67,9 @@ public class ChatClient extends AbstractClient
   {
 	  
 	 String tempMsg = (String)msg;
-	 System.out.println(">ChatClient>fromServer> " + msg);
+	 //System.out.println(">ChatClient>fromServer> " + msg);
     clientUI.display(tempMsg);
-    System.out.println(">ChatClient>fromServer> complete");
+    //System.out.println(">ChatClient>fromServer> complete");
   }
 
   /**
@@ -81,10 +81,10 @@ public class ChatClient extends AbstractClient
   {
     try
     {
-    	System.out.println(">ChatClient>fromUI> " + msg);
+    	//System.out.println(">ChatClient>fromUI> " + msg);
         
       sendToServer(msg);  // 파라미터가 오브젝트  아마도 서버로 보내느 듯
-      System.out.println(">ChatClient>fromServer> complete");
+      //System.out.println(">ChatClient>fromServer> complete");
     }
     catch(IOException e)
     {

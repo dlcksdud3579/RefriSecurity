@@ -3,7 +3,10 @@ package Client;
 import java.util.ArrayList;
 
 public class CRefrigerator {
-	private String ownerID;
+	
+	private String name;
+	private int serial;
+	
 	private ArrayList<CFood> foodList;
 	private ArrayList<CFood> emptyFoodList;
 	private ArrayList<CUser> userList;
@@ -59,12 +62,22 @@ public class CRefrigerator {
 	
 
 
-	public String getOwnerID() {
-		return ownerID;
+	
+
+	public String getName() {
+		return name;
 	}
 
-	public void setOwnerID(String ownerID) {
-		this.ownerID = ownerID;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getSerial() {
+		return serial;
+	}
+
+	public void setSerial(int serial) {
+		this.serial = serial;
 	}
 
 	public ArrayList<CFood> getFoodList() {

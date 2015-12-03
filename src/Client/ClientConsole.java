@@ -39,6 +39,7 @@ public class ClientConsole implements ChatIF
   ChatClient client;
   private ConsoleUI cui;
   private CUser nowUser;
+  private CLogin login;
   private String tempMsg;
   private boolean flag;
   private boolean waitBool;
@@ -105,7 +106,7 @@ public class ClientConsole implements ChatIF
    */
   public void display(String message) 
   {
-	  System.out.println(">" + message);
+	  //System.out.println(">" + message);
 	  receiveMsg(message);
   }
 
@@ -114,6 +115,7 @@ public class ClientConsole implements ChatIF
 	  this.tempMsg = msg;
 	  String cmd = msg;
 	  
+	  //System.out.println(">>" + isFlag());
 	  
 	  if (msg.equals("true")) {
 		  this.flag = true;
@@ -130,9 +132,10 @@ public class ClientConsole implements ChatIF
 	  
 	  switch (cmd)
 	  {
-
 	  case "User":
-		  
+		  this.login = new CLogin(this);
+		  this.nowUser = login.createUser(this.tempMsg);
+		  cui.refriListScreen();
 		  break;
 	  }
 	  setWaitBool(false);
@@ -146,7 +149,7 @@ public class ClientConsole implements ChatIF
 	  for(; tempMsg.charAt(i) !='/';i++);
 	  rv = tempMsg.substring(0, i);
 	  tempMsg = tempMsg.substring(i+1, tempMsg.length());
-	  System.out.println(rv);
+	  //System.out.println(rv);
 	  return rv;
   }
   //Class methods ***************************************************
@@ -226,6 +229,16 @@ public boolean isWaitBool() {
 
 public void setWaitBool(boolean waitBool) {
 	this.waitBool = waitBool;
+}
+
+
+public CUser getNowUser() {
+	return nowUser;
+}
+
+
+public void setNowUser(CUser nowUser) {
+	this.nowUser = nowUser;
 }
   
   

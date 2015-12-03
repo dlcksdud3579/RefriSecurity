@@ -9,7 +9,11 @@ public class CUser {
 	private String name;
 	private ArrayList<CRefrigerator> myRefrigerator;
 	
-	
+	public CUser(String id, String name, String pw) {
+		setID(id);
+		setPW(pw);
+		setName(name);
+	}
 	
 	public void CreateRefrigerator()
 	{

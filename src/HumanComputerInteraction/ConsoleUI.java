@@ -8,13 +8,13 @@ public class ConsoleUI {
 	
 	private ClientConsole clientConsole;
 	private Scanner scan;
-	private CUser 	nowUser;
+	private boolean wait;
+	private int logInFlag;
 	
 	// constructor /////////////////////////////////////////////
 	public ConsoleUI() {
 		setClientConsole( null );
 		this.scan = new Scanner( System.in );
-		setUser( null );
 	}
 	////////////////////////////////////////////////////////////
 	
@@ -108,32 +108,25 @@ public class ConsoleUI {
 			// 아이디 패스워드 체크를 통해 로그인을 허용한다.
 			//login = new CLogin(id, pw);
 			//flag = login.LoginCheck();
-			String msg = "getUser/" + id;
+			String msg = "getUser/" + id + "/";
 			clientConsole.accept(msg);
+			clientConsole.setWaitBool(true);
 			
-			if (flag == -1) {
-				System.out.printf(" This [%s] ID does not exit\n\n", id);
-			}
-			else if (flag == -2) {
-				System.out.printf(" This [%s] PW does not exit\n\n", pw);
-			}
-			else if (flag == 1) {
-				// 다음 화면 나오게 출력
-				refriListScreen();
+			while ( clientConsole.isWaitBool() );
+			
+			if (clientConsole.isFlag()) {
+				System.out.println("Login Success!");
 				break;
 			}
-			else if (flag == 0) { // develop mode
-				System.out.println(" Develope master login ");
-				refriListScreen();
-				break;
-			}
+			else
+				System.out.println("Login Fail...");
 		}
+		
 	}
 	
 	private void signUpScreen()
 	{
 		String id, pw, name;
-		int flag = 0;
 		// 0 : default
 		// 1 : 가입 할 수 있음
 		// -1 : 아이디 중복
@@ -183,13 +176,13 @@ public class ConsoleUI {
 		startScreen();
 	}
 	
-	private void refriListScreen()
+	public void refriListScreen()
 	{
-		
+		System.out.printf("Hello \" %s \" user!\n", clientConsole.getNowUser().getName());
 	}
 	
 	
-	private void nextScreen()
+	public void nextScreen()
 	{
 		for (int i = 0 ; i < 20; i++)
 			System.out.println("");
@@ -197,19 +190,24 @@ public class ConsoleUI {
 	
 	
 	// getter setter /////////////////////////////////////////////
-	public CUser getUser()
-	{
-		return this.nowUser;
-	}
-	public void setUser(CUser user) 
-	{
-		this.nowUser = user;
-	}
+
 	public ClientConsole getClientConsole() {
 		return clientConsole;
 	}
 	public void setClientConsole(ClientConsole clientConsole) {
 		this.clientConsole = clientConsole;
+	}
+	public boolean isWait() {
+		return wait;
+	}
+	public void setWait(boolean wait) {
+		this.wait = wait;
+	}
+	public int getLogInFlag() {
+		return logInFlag;
+	}
+	public void setLogInFlag(int logInFlag) {
+		this.logInFlag = logInFlag;
 	}
 
 	

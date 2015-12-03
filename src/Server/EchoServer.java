@@ -323,9 +323,11 @@ public class EchoServer extends AbstractServer
 		sendtoOneClient("true",client);
 		return;
 		
-	case "getUser": // 원하는 유저 정보 받오는    getUser/유저아이디/
+	case "getUser": // 원하는 유저 정보 받오는    getUser/유저아이디/비밀번호/
 		tempUser = m_data.searchSUser(divideString()); // 유저 아이디로 서치 
 		if(tempUser == null)
+			break;
+		if(tempUser.getPW() != divideString())
 			break;
 		tempMsg = "User/"+tempUser.toString();
 		sendtoOneClient("true",client);

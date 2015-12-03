@@ -10,13 +10,19 @@ public class CFood {
 	private Date exprieDate; 
 	private Date startDate;
 	private String comment;
+	private ClientConsole clientConsole;
 	
-	public void ChangeFood()
+	
+	public boolean ChangeFood(CFood food,int serial)
 	{
-		
+		clientConsole.accept("changeFood/"+serial+"/"+ getName()+"/"+food.toString());
+		while(clientConsole.isWaitBool());
+		if(clientConsole.isFlag()==true)
+		{
+			return true;
+		}
+		return false;
 	}
-
-
 
 	public String getName() {
 		return name;
@@ -70,4 +76,9 @@ public class CFood {
 		this.comment = comment;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return 	name+"/"+number+"/"+percent+"/"+exprieDate+"/"+startDate+"/"+comment+"/";
+	}
 }

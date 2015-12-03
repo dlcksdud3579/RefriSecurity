@@ -89,7 +89,9 @@ public class ClientConsole implements ChatIF
       //while (true) 
       //{
         //message = fromConsole.readLine();
+    	System.out.println(">accept> " + msg);
       client.handleMessageFromClientUI(msg); // 클라이언트에서 처리
+      System.out.println(">accept> complete");
       //}
     } 
     catch (Exception ex) 
@@ -107,8 +109,9 @@ public class ClientConsole implements ChatIF
    */
   public void display(String message) 
   {
-	  System.out.println(">" + message);
+	  System.out.println(">display>" + message);
 	  receiveMsg(message);
+	  System.out.println(">display> complete");
   }
 
   public void receiveMsg(String msg) // 메세지를 받아서 해석하는 함수
@@ -196,10 +199,12 @@ public class ClientConsole implements ChatIF
 		 this.login = new CLogin(this);
 		 this.nowUser = login.createUser(this.tempMsg);
 		 cui.nextScreen();
-		 cui.refriListScreen();
+		 System.out.println(">receiveMsg>User> complete");
 		 break;
 	  }
 	  setWaitBool(false);
+	  
+	  System.out.println(">receiveMsg> Complete");
   }
   
   public String divideString() //받아온 데이터  클래스의 종류를 알아내는 함수 

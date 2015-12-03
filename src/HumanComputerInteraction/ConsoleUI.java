@@ -112,7 +112,7 @@ public class ConsoleUI {
 			// 아이디 패스워드 체크를 통해 로그인을 허용한다.
 			//login = new CLogin(id, pw);
 			//flag = login.LoginCheck();
-			String msg = "getUser/" + id + "/";
+			String msg = "getUser/" + id + "/" + pw + "/";
 			clientConsole.accept(msg);
 			clientConsole.setWaitBool(true);
 			
@@ -126,6 +126,8 @@ public class ConsoleUI {
 				System.out.println("Login Fail...");
 		}
 		
+		clientConsole.setWaitBool(true);
+		refriListScreen();
 	}
 	
 	private void signUpScreen()
@@ -182,6 +184,10 @@ public class ConsoleUI {
 	
 	public void refriListScreen()
 	{
+		while (clientConsole.isWaitBool());
+		
+		int flag;
+		
 		System.out.printf("Hello \" %s \" user!\n", clientConsole.getNowUser().getName());
 		
 		System.out.println("***************************************");
@@ -196,28 +202,30 @@ public class ConsoleUI {
 		while (true)
 		{
 			System.out.printf("input :: ");
-			int flag = scan.nextInt();
+			flag = scan.nextInt();
 			
-			if (flag == 0) {
-				System.out.println("!! Thanks for using this program !!");
-				System.exit(1);
-				return;
-			}
-			else if (flag == 1) {
-				viewRefriScreen();
-				return;
-			}
-			else if (flag == 2) {
-				createRefriScreen();
-				return;
-			}
-			else if (flag == 3) {
-				DeleteRefriScreen();
-				return;
-			}
-			else  {
-				
-			}
+			if (flag >= 0 && flag <= 3)
+				break;
+			else
+				System.out.println(" !! This is not correct input !!");
+		}
+		
+		if (flag == 0) {
+			System.out.println("!! Thanks for using this program !!");
+			System.exit(1);
+			return;
+		}
+		else if (flag == 1) {
+			viewRefriScreen();
+			return;
+		}
+		else if (flag == 2) {
+			createRefriScreen();
+			return;
+		}
+		else if (flag == 3) {
+			DeleteRefriScreen();
+			return;
 		}
 	}
 	
